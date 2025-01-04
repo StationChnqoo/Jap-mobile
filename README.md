@@ -20,3 +20,10 @@ chore：构建工具或依赖的修改
 ci：CI 配置或脚本修改
 revert：回滚提交
 ```
+
+### 环境
+
+- 开发阶段：.env.development、.env.local
+- 测试阶段：.env.test、.env.qa
+- 预生产阶段：.env.staging
+- 生产阶段：.env.production
