@@ -8,6 +8,7 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  TouchableOpacity,
   useColorScheme,
   View,
 } from 'react-native';
@@ -23,6 +24,7 @@ import {
 import {RootStacksParams, RootStacksProp} from './Stacks';
 import {RouteProp} from '@react-navigation/native';
 import {useToast} from '@src/components/ToastProvider';
+import {useCaches} from '@src/constants/store';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -61,6 +63,7 @@ interface MyProps {
 
 const HelloWorld = (props: MyProps) => {
   const isDarkMode = useColorScheme() === 'dark';
+  const {bears, increase} = useCaches();
   const {route} = props;
   const toast = useToast();
 
@@ -87,10 +90,17 @@ const HelloWorld = (props: MyProps) => {
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
           <Flex horizontal>
-            <FastImage
-              source={{uri: 'https://cctv3.net/i.jpg'}}
-              style={{height: 32, width: 32}}
-            />
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => {
+                increase(1);
+              }}>
+              <FastImage
+                source={{uri: 'https://cctv3.net/i.jpg'}}
+                style={{height: 32, width: 32}}
+              />
+            </TouchableOpacity>
+            <Text>Bears: {bears}</Text>
             <Image
               source={require('@src/assets/images/android.png')}
               style={{height: 32, width: 32}}

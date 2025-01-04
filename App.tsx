@@ -1,5 +1,6 @@
 import {RouteProp} from '@react-navigation/native';
 import Flex from '@src/components/Flex';
+import {useCaches} from '@src/constants/store';
 import {RootStacksParams, RootStacksProp} from '@src/screens/Stacks';
 import React, {useEffect} from 'react';
 import type {PropsWithChildren} from 'react';
@@ -62,6 +63,7 @@ interface MyProps {
 const App = (props: MyProps) => {
   const isDarkMode = useColorScheme() === 'dark';
   const {navigation} = props;
+  const {bears, increase} = useCaches();
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -69,11 +71,11 @@ const App = (props: MyProps) => {
 
   useEffect(() => {
     setTimeout(() => {
-      navigation.replace('HelloWorld', {id: '123456'});
+      // navigation.replace('HelloWorld', {id: '123456'});
     }, 1000);
     return function () {};
   }, []);
-  
+
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
@@ -89,10 +91,17 @@ const App = (props: MyProps) => {
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
           <Flex horizontal>
-            <FastImage
-              source={{uri: 'https://cctv3.net/i.jpg'}}
-              style={{height: 32, width: 32}}
-            />
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => {
+                increase(1);
+              }}>
+              <FastImage
+                source={{uri: 'https://cctv3.net/i.jpg'}}
+                style={{height: 32, width: 32}}
+              />
+            </TouchableOpacity>
+            <Text>Bears: {bears}</Text>
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => {
