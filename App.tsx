@@ -1,10 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
 import type {PropsWithChildren} from 'react';
 import {
@@ -16,6 +9,7 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 import {
   Colors,
@@ -76,6 +70,10 @@ function App(): React.JSX.Element {
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
+          <FastImage
+            source={{uri: 'https://cctv3.net/i.jpg'}}
+            style={{height: 32, width: 32}}
+          />
           <Section title="Step One">
             Edit <Text style={styles.highlight}>App.tsx</Text> to change this
             screen and then come back to see your edits.
