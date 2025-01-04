@@ -1,6 +1,4 @@
-import {RouteProp} from '@react-navigation/native';
 import Flex from '@src/components/Flex';
-import {RootStacksParams, RootStacksProp} from '@src/screens/Stacks';
 import React, {useEffect} from 'react';
 import type {PropsWithChildren} from 'react';
 import {
@@ -10,7 +8,6 @@ import {
   StatusBar,
   StyleSheet,
   Text,
-  TouchableOpacity,
   useColorScheme,
   View,
 } from 'react-native';
@@ -23,6 +20,9 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import {RootStacksParams, RootStacksProp} from './Stacks';
+import {RouteProp} from '@react-navigation/native';
+import {useToast} from '@src/components/ToastProvider';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -56,24 +56,22 @@ function Section({children, title}: SectionProps): React.JSX.Element {
 
 interface MyProps {
   navigation?: RootStacksProp;
-  route?: RouteProp<RootStacksParams, 'App'>;
+  route?: RouteProp<RootStacksParams, 'HelloWorld'>;
 }
 
-const App = (props: MyProps) => {
+const HelloWorld = (props: MyProps) => {
   const isDarkMode = useColorScheme() === 'dark';
-  const {navigation} = props;
+  const {route} = props;
+  const toast = useToast();
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      navigation.replace('HelloWorld', {id: '123456'});
-    }, 1000);
+    toast.show(route.params.id);
     return function () {};
   }, []);
-  
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
@@ -93,16 +91,10 @@ const App = (props: MyProps) => {
               source={{uri: 'https://cctv3.net/i.jpg'}}
               style={{height: 32, width: 32}}
             />
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => {
-                navigation.navigate('HelloWorld', {id: '666666'});
-              }}>
-              <Image
-                source={require('@src/assets/images/android.png')}
-                style={{height: 32, width: 32}}
-              />
-            </TouchableOpacity>
+            <Image
+              source={require('@src/assets/images/android.png')}
+              style={{height: 32, width: 32}}
+            />
           </Flex>
           <Section title="Step One">
             Edit <Text style={styles.highlight}>App.tsx</Text> to change this
@@ -143,4 +135,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default HelloWorld;
